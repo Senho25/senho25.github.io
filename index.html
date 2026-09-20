@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIP-Web</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --forest:#0f3d2e;--forest-bright:#1a6b4a;--moss:#2d7a58;--mint:#6bc49a;
+  --orange:#e8621a;--orange-light:#fff3e8;
+  --red:#e03030;--red-bright:#ff4040;--paper:#faf8f5;
+  --black:#0a0a0a;--moss-yellow:#d4e8a0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Noto Sans SC',sans-serif;background:#fff;color:var(--forest);overflow-x:hidden}
+
+/* ===== HERO ===== */
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;
+  background:linear-gradient(160deg,#0a2e22 0%,var(--forest) 40%,var(--moss) 100%);color:#fff;overflow:hidden}
+/* animated wave lines */
+.wave-bg{position:absolute;inset:0;opacity:0.4;pointer-events:none}
+.wave-bg path{stroke:rgba(255,255,255,0.12);fill:none;stroke-width:1.2;animation:waveMove 8s ease-in-out infinite}
+.wave-bg path:nth-child(2){animation-delay:-2s}
+.wave-bg path:nth-child(3){animation-delay:-4s}
+.wave-bg path:nth-child(4){animation-delay:-6s}
+@keyframes waveMove{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+
+.hero-logo{width:88px;height:88px;border:2px solid rgba(255,255,255,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:40px;font-weight:700;margin-bottom:36px;position:relative;z-index:1;
+  animation:fadeUp 1.2s ease-out;transition:transform 0.4s,border-color 0.4s}
+.hero-logo:hover{transform:scale(1.08);border-color:#fff}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero h1{font-family:Georgia,'Playfair Display',serif;font-size:clamp(48px,10vw,120px);font-weight:700;letter-spacing:-0.02em;position:relative;z-index:1;line-height:1;
+  animation:fadeUp 1.2s ease-out 0.2s both}
+.hero .sub{font-family:Georgia,serif;font-style:italic;font-size:clamp(18px,3vw,28px);margin-top:16px;opacity:0.85;position:relative;z-index:1;
+  animation:fadeUp 1.2s ease-out 0.4s both}
+.hero .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:0.3em;text-transform:uppercase;opacity:0.5;z-index:1;animation:bounce 2.5s infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+
+/* floating blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.25;pointer-events:none;animation:float 12s ease-in-out infinite}
+.blob1{width:400px;height:400px;background:var(--mint);top:10%;left:-100px}
+.blob2{width:350px;height:350px;background:#1a8b6a;bottom:10%;right:-80px;animation-delay:-6s}
+@keyframes float{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,-30px)}66%{transform:translate(-20px,20px)}}
+
+/* ===== SECTION COMMON ===== */
+.section{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;overflow:hidden}
+.section-inner{max-width:1100px;width:100%;padding:80px 40px;text-align:center;position:relative;z-index:1}
+.section-num{font-size:12px;letter-spacing:0.3em;text-transform:uppercase;opacity:0.5;margin-bottom:24px}
+.section h2{font-family:Georgia,serif;font-size:clamp(40px,8vw,96px);font-weight:700;line-height:1.05;margin-bottom:24px}
+.section .desc{font-size:18px;line-height:1.8;max-width:600px;margin:0 auto 40px;opacity:0.8}
+
+/* Buttons — theme colored, hover keeps text readable */
+.enter-btn{display:inline-block;padding:16px 48px;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);position:relative;z-index:1;font-weight:600}
+.enter-btn:hover{transform:translateY(-2px)}
+
+/* ===== CAMPUS SECTION ===== */
+#campus{background:var(--forest);color:#fff}
+#campus::before{content:'CAMPUS';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28vw;font-weight:900;color:rgba(255,255,255,0.04);letter-spacing:-0.05em;pointer-events:none;line-height:1;
+  animation:slowPan 20s ease-in-out infinite alternate}
+@keyframes slowPan{from{transform:translate(-50%,-50%) translateX(-30px)}to{transform:translate(-50%,-50%) translateX(30px)}}
+#campus .enter-btn{background:var(--mint);color:var(--forest)}
+#campus .enter-btn:hover{background:#fff;box-shadow:0 10px 40px rgba(107,196,154,0.4)}
+
+/* ===== STATION SECTION ===== */
+#station{background:var(--orange-light);color:#5a2d0c}
+#station .s-blob{position:absolute;border-radius:50%;filter:blur(50px);opacity:0.3;pointer-events:none;animation:float 10s ease-in-out infinite}
+#station .sb1{width:300px;height:300px;background:var(--orange);top:5%;right:5%}
+#station .sb2{width:250px;height:250px;background:#ffd166;bottom:5%;left:5%;animation-delay:-5s}
+#station .ring{width:88px;height:88px;border-radius:50%;
+  background:conic-gradient(#e8621a,#f0c420,#4caf50,#2196f3,#9c27b0,#e91e63,#e8621a);
+  margin:0 auto 32px;padding:3px;animation:spin 15s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#station .ring-inner{width:100%;height:100%;border-radius:50%;background:var(--orange-light);display:flex;align-items:center;justify-content:center}
+#station .ring-inner svg{width:40px;height:40px;stroke:var(--orange);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#station .enter-btn{background:var(--orange);color:#fff}
+#station .enter-btn:hover{background:#d0520e;box-shadow:0 10px 40px rgba(232,98,26,0.4);transform:translateY(-2px)}
+
+/* ===== JOURNAL SECTION ===== */
+#journal{background:var(--black);color:#e8e4dc}
+#journal::before{content:'JOURNAL';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:22vw;font-weight:900;color:rgba(255,255,255,0.03);letter-spacing:-0.05em;pointer-events:none;line-height:1}
+#journal .sub-journals{display:flex;gap:2px;justify-content:center;margin-top:48px;max-width:700px;margin-left:auto;margin-right:auto}
+/* Equal-sized buttons */
+#journal .sub-j{flex:1;padding:48px 32px;border:1px solid rgba(255,255,255,0.12);min-width:0;cursor:pointer;transition:all 0.4s;position:relative;overflow:hidden}
+#journal .sub-j:hover{transform:translateY(-4px)}
+#journal .sub-j .name{font-family:Georgia,serif;font-size:32px;margin-bottom:8px;transition:color 0.3s}
+#journal .sub-j .type{font-size:10px;letter-spacing:0.25em;opacity:0.5}
+#journal .sub-j .arrow{margin-top:20px;font-size:12px;letter-spacing:0.2em;opacity:0;transition:opacity 0.3s}
+#journal .sub-j:hover .arrow{opacity:1}
+/* Paradox — brighter red */
+#journal .sub-j.paradox{background:rgba(224,48,48,0.08)}
+#journal .sub-j.paradox:hover{background:rgba(224,48,48,0.2);border-color:var(--red-bright);box-shadow:0 10px 40px rgba(224,48,48,0.2)}
+#journal .sub-j.paradox .name{color:var(--red-bright)}
+#journal .sub-j.paradox .arrow{color:var(--red-bright)}
+/* Laurel */
+#journal .sub-j.Laurel{background:rgba(212,232,160,0.05)}
+#journal .sub-j.Laurel:hover{background:rgba(212,232,160,0.12);border-color:var(--moss-yellow);box-shadow:0 10px 40px rgba(212,232,160,0.15)}
+#journal .sub-j.Laurel .name{color:var(--moss-yellow)}
+#journal .sub-j.Laurel .arrow{color:var(--moss-yellow)}
+
+/* ===== FOOTER ===== */
+footer{padding:40px;text-align:center;font-size:12px;opacity:0.5;background:#fff;color:var(--forest)}
+</style>
+</head>
+<body>
+<nav style="position:fixed;right:32px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:16px">
+  <a href="#top" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.4)" title="Top"></a>
+  <a href="#campus" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.4)" title="Campus"></a>
+  <a href="#station" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.4)" title="Station"></a>
+  <a href="#journal" style="width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.4)" title="Journal"></a>
+</nav>
+
+<section class="hero" id="top">
+  <svg class="wave-bg" viewBox="0 0 1440 800" preserveAspectRatio="none">
+    <path d="M0,400 C240,300 480,500 720,400 C960,300 1200,500 1440,400 L1440,800 L0,800 Z"/>
+    <path d="M0,450 C240,350 480,550 720,450 C960,350 1200,550 1440,450 L1440,800 L0,800 Z"/>
+    <path d="M0,500 C240,400 480,600 720,500 C960,400 1200,600 1440,500 L1440,800 L0,800 Z"/>
+    <path d="M0,550 C240,450 480,650 720,550 C960,450 1200,650 1440,550 L1440,800 L0,800 Z"/>
+  </svg>
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="hero-logo">A</div>
+  <h1>AIP-Web</h1>
+  <p class="sub">自由栖于旷野，灵魂归于沧溟</p>
+  <div class="scroll-hint">Scroll ↓</div>
+</section>
+
+<section class="section" id="campus" onclick="location.href='campus/index.html'">
+  <div class="section-inner">
+    <div class="section-num">01 / Campus</div>
+    <h2>AIP-Campus</h2>
+    <p class="desc">Where minds meet, ideas grow. Clubs, news, and the forum — your campus, your voice.</p>
+    <a class="enter-btn" href="campus/index.html">Enter Campus →</a>
+  </div>
+</section>
+
+<section class="section" id="station" onclick="location.href='station/index.html'">
+  <div class="s-blob sb1"></div>
+  <div class="s-blob sb2"></div>
+  <div class="section-inner">
+    <div class="ring"><div class="ring-inner">
+      <svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+    </div></div>
+    <div class="section-num">02 / Station</div>
+    <h2>AIP-Station</h2>
+    <p class="desc">The campus radio. Sound, waves, and everything in between.</p>
+    <a class="enter-btn" href="station/index.html">Tune In →</a>
+  </div>
+</section>
+
+<section class="section" id="journal">
+  <div class="section-inner">
+    <div class="section-num">03 / Journal</div>
+    <h2>AIP-Journal</h2>
+    <p class="desc">Two publications, two voices. Thought and image, argument and frame.</p>
+    <div class="sub-journals">
+      <div class="sub-j paradox" onclick="location.href='journal/paradox.html'">
+        <div class="name">Paradox</div>
+        <div class="type">ACADEMIC</div>
+        <div class="arrow">Read →</div>
+      </div>
+      <div class="sub-j Laurel" onclick="location.href='journal/Laurel.html'">
+        <div class="name">Laurel</div>
+        <div class="type">PHOTOGRAPHY</div>
+        <div class="arrow">View →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 AIP-Web 1.1.0 · AIP-Campus · AIP-Station · AIP-Journal</footer>
+
+</body>
+</html>
